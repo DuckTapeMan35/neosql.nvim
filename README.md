@@ -17,6 +17,7 @@ A Neovim plugin for PostgreSQL database interaction with an intuitive interface 
 - **Primary Key Detection**: Automatically detects primary keys for safe data updates and deletes
 - **Table Navigation**: Browse database tables and quickly generate SQL templates
 - **SQL Templates**: Quick access to INSERT, SELECT, UPDATE, and DELETE templates from the table list
+- **Project Management**: Save and load connection strings by name for quick access to frequently used databases
 
 ## Installation
 
@@ -90,10 +91,21 @@ require('neosql').setup({
 
 ### Commands
 
+#### Connection Commands
+
 - `:NeoSqlConnect [connection_string]` - Connect to PostgreSQL database using connection string and open views. If no connection string is provided, you'll be prompted to enter one.
 - `:NeoSqlOpen` - Open neosql views (table list, query, result)
 - `:NeoSqlClose` - Close neosql views
 - `:NeoSqlDisconnect` - Disconnect from PostgreSQL database
+
+#### Project Management Commands
+
+- `:NeoSqlProjectSave [name]` - Save a connection string as a named project. If no name is provided, you'll be prompted to enter one. You'll then be prompted for the connection string.
+- `:NeoSqlProjectLoad [name]` - Load and connect to a saved project by name. If no name is provided, you'll be prompted to select one. Supports tab completion.
+- `:NeoSqlProjectList` - List all saved projects
+- `:NeoSqlProjectDelete [name]` - Delete a saved project. If no name is provided, you'll be prompted to enter one. Supports tab completion.
+
+Projects are stored in `~/.local/share/nvim/neosql/projects.json` and persist across sessions.
 
 ### Keybindings
 
@@ -205,6 +217,33 @@ The table properties view allows you to manage table columns: create new columns
 Supported formats:
 - **CSV**: Exports with proper escaping for commas, quotes, and newlines
 - **JSON**: Exports as a JSON array of objects
+
+### Project Management
+
+Save connection strings as named projects to avoid typing them repeatedly:
+
+1. Save a project:
+   ```
+   :NeoSqlProjectSave myproject
+   ```
+   (You'll be prompted for the connection string)
+
+2. Load and connect to a saved project:
+   ```
+   :NeoSqlProjectLoad myproject
+   ```
+
+3. List all saved projects:
+   ```
+   :NeoSqlProjectList
+   ```
+
+4. Delete a project:
+   ```
+   :NeoSqlProjectDelete myproject
+   ```
+
+Projects are stored in JSON format in Neovim's data directory (`~/.local/share/nvim/neosql/projects.json`) and persist across sessions.
 
 ### Visual Features
 

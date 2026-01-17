@@ -5,6 +5,7 @@ local ResultManager = require('neosql.result_manager')
 local ExportManager = require('neosql.export_manager')
 local BindingManager = require('neosql.binding_manager')
 local Commands = require('neosql.commands')
+local ProjectManager = require('neosql.project_manager')
 
 local AppManager = {}
 AppManager.__index = AppManager
@@ -18,6 +19,7 @@ function AppManager.new()
   self.export_manager = ExportManager.new()
   self.binding_manager = nil
   self.commands = nil
+  self.project_manager = ProjectManager.new()
   self.is_open = false
   self.current_table_name = nil
   self.properties_mode = false
